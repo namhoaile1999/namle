@@ -1,1 +1,2 @@
-*.bas text eol=crlf
+# VBA import needs CRLF: store .bas byte-for-byte (no line-ending conversion)
+*.bas -text
