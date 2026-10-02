@@ -1,6 +1,7 @@
-# Implementation Spec - CreoRegister v1.0  (Spec v0.1, 2026-10-02, AWAITING APPROVAL)
+# Implementation Spec - CreoRegister v1.0  (Spec v0.2, 2026-10-02, APPROVED + BUILT, NOT YET TESTED)
 
-Status: SPEC ONLY. No code is written until Nam approves this document.
+Status: approved by Nam 2026-10-02 and built as `CreoRegister.bas` v1.0. Not yet compiled or run.
+Test with `docs/CreoRegister_TEST_PROTOCOL.md`.
 Symbol legend: [?] = open question / default you may veto.
 
 ## What it does
@@ -150,12 +151,39 @@ Built by the senior session directly (single small module, about 400 lines).
 Integrity gate (skill section 10) and manifest apply: ASCII-only .bas, a
 version header, procedure list and tail check on the saved file.
 
-## Open questions
-- [?] Q1 Trigger: Excel button (default) vs Creo mapkey button (v2).
-- [?] Q2 Names with suffixes (`M281975_V2`, `M281975-01`): refuse (default) or
-  match the first 7 characters?
-- [?] Q3 Check A-number = assembly and M-number = part in Creo? Needs one more
-  API name (`IpfcModel.Type`) verified on your machine. Default: not in v1.
-- [?] Q4 Shortcut Ctrl+Shift+R OK, or does it clash with your CreoMenu keys
-  (B/T/C)?
-- [?] Q5 Do your colleagues need to use the tool too, or only you for now?
+## Decisions (Nam, 2026-10-02)
+- Q1 Trigger: Excel button (default kept; no explicit pick).
+- Q2 Suffixed names: REFUSE.
+- Q3 Part/assembly type check: not in v1 (default kept).
+- Q4 Shortcut: Ctrl+Shift+R.
+- Q5 Users: colleagues too, so a user manual was added (`docs/CreoRegister_MANUAL.md`).
+
+## Build notes (deviations from v0.1, all on the safe side)
+1. A **confirm popup** (name / description / sheet / project, Yes/No) appears
+   BEFORE the register is opened. It covers the "wrong Creo window active"
+   weak spot, and it does not hold the shared-file lock while you read it.
+2. Descriptions that Excel would convert (leading = + - @, numbers, dates such
+   as "1/2") are written as text with an apostrophe prefix.
+3. Read-back gives a separate, clear message when the row has no Part No
+   formula. Assemblies has numbered rows 0737+ (sheet rows 755+) without the
+   formula.
+4. "Prepared rows left" counts only rows that have a Part No.
+5. The tool workbook saves itself after each attempt so the log survives,
+   but only if it has already been saved as .xlsm.
+6. Senior built directly, with no builder or critic subagents (the user did
+   not ask for agents). A self-critic pass caught 6 issues before delivery:
+   close-after-save reported as FAIL; date/number auto-conversion of
+   descriptions; Save As popup on an unsaved tool workbook; the tool path
+   picked as the register; overstated rows-left on Assemblies; a parameter
+   named `caption` re-casing `.Caption`.
+
+## Open after build
+- [?] The register file contains Sheet Views + threaded comments, which are
+  SharePoint/OneDrive co-authoring features. If the register is co-authored
+  in SharePoint/Teams instead of sitting on a plain network drive, a colleague
+  having it open does NOT make it read-only. The "register busy" guard then
+  does not trigger, and protection rests on the at-write re-check plus
+  co-authoring merge. Ask Nam where the file lives (test protocol, last
+  section).
+- [?] `session.CurrentModel` / `IpfcModel.InstanceName` are proved only by
+  test step 2.

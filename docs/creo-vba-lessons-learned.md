@@ -678,3 +678,12 @@ params; the affected COUNT varies between scans of the same folder.
   confirmed via search-result snippets only (support.ptc.com and
   community.ptc.com are blocked from the cloud sandbox). Prove them on the
   user's machine in test step 1 before trusting them.
+- BUILD (v1.0, same day): senior-built, not yet compiled or run. Facts:
+  (a) VBA's .bas import needs CRLF line endings, so `.gitattributes` pins
+  `*.bas eol=crlf` and the manifest records the LF-only line count (must
+  be 0); (b) a parameter named `caption` makes the VBE re-case every
+  `.Caption` in the project (case-insensitive identifiers, same family as
+  the eNum trap), so use `btnCaption`; (c) Sheet Views + threaded comments
+  in an .xlsx = the file has been co-authored via SharePoint/OneDrive.
+  There, "opened read-only = someone else has it" no longer holds. Ask
+  where a shared file lives before designing lock logic around it.

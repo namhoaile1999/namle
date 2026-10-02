@@ -1,0 +1,8 @@
+CreoRegister.bas MANIFEST (regenerate whenever the .bas changes)
+Version header : CreoRegister v1.0   (2026-10-02)
+Total lines    : 878
+Line endings   : CRLF (LF-only lines: 0)
+Non-ASCII chars: 0  (must be 0)
+Procedures     : 26
+Procedure list : RegSetup, RegPickRegister, RegRefreshNextFree, RegRegisterActivePart, rgReadCreo, rgParseName, rgSheetFor, rgOpenRegister, rgFileExists, rgGetSheet, rgHeaderProblem, rgHeaderStarts, rgProjectExists, rgFindRow, rgBoughtExtras, rgCellBlocked, rgUpdatePanel, rgNextFree, rgRowUsed, rgText, rgPad, rgAllDigits, rgRegisterPath, rgEnsureSheet, rgAddButton, rgReport
+Last line      : End Sub
